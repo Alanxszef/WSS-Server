@@ -12,13 +12,14 @@ let players = {}; // Przechowuje informacje o graczach
 wss.on('connection', (ws) => {
   const playerId = Date.now();  // Unikalny identyfikator gracza na podstawie timestampu
   players[playerId] = { x: 100, y: 100, points: 0 }; // Ustawienia początkowe gracza
-
+  
   clients.add(ws);
   console.log(`🟢 Nowe połączenie. Gracz ID: ${playerId}`);
 
   // Wysyłanie stanu gry do nowego gracza
   ws.send(JSON.stringify({ type: 'init', players: players }));
 
+  // Obsługuje otrzymywanie wiadomości od gracza (np. ruchy)
   ws.on('message', (msg) => {
     const message = JSON.parse(msg);
 
@@ -40,6 +41,7 @@ wss.on('connection', (ws) => {
     }
   });
 
+  // Obsługuje rozłączenie gracza
   ws.on('close', () => {
     delete players[playerId];
     clients.delete(ws);
