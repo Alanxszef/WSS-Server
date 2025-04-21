@@ -46,7 +46,7 @@ wss.on('connection', (ws) => {
     delete players[playerId];
     clients.delete(ws);
     console.log(`🔴 Gracz ID: ${playerId} rozłączony`);
-    broadcastState(); // Po rozłączeniu gracza zaktualizuj stan gry
+    broadcastState(); // Po rozłączeniu gracza zaktualizuj stan gry //V2
   });
 });
 
